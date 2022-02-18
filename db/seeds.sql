@@ -20,6 +20,7 @@ VALUES ("Accountant", 125000, 3);
 INSERT INTO role (title, salary, department_id)
 VALUES ("Legal Team Lead", 250000, 4);
 
+/* remove manger_id from here and value and add this using update statement later */
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Doe", 1, 3);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
@@ -36,3 +37,6 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Brad", "Hu", 4, 7);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Erica", "Erikson", 1, 2);
+
+/* for each employee with manager relation goes here */
+update employee set manager_id = 2 where id = 1; 
