@@ -3,7 +3,7 @@ use employeetracker;
 INSERT INTO department (name)
 VALUES ("HR");
 INSERT INTO department (name)
-VALUES ("Information Technology");
+VALUES ("IT");
 INSERT INTO department (name)
 VALUES ("Finance");
 INSERT INTO department (name)
@@ -21,22 +21,24 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Legal Team Lead", 250000, 4);
 
 /* remove manger_id from here and value and add this using update statement later */
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Doe", 1, 3);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Mike", "Smith", 2, 1);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Jose", "Rodriguez", 3, 2);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Tina", "Hanson", 4, 3);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Marlin", "Brown", 5, null);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Sarah", "Thompson", 2, null);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Brad", "Hu", 4, 7);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Erica", "Erikson", 1, 2);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("John", "Doe", 1);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Mike", "Smith", 2,);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Jose", "Rodriguez", 3);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Tina", "Hanson", 4);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Marlin", "Brown", 5);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Sarah", "Thompson", 2);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Brad", "Hu", 4);
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Erica", "Erikson", 1);
 
 /* for each employee with manager relation goes here */
 update employee set manager_id = 2 where id = 1; 
+update employee set manager_id = 2 where id = 2; 
+update employee set manager_id = 2 where id = 4; 

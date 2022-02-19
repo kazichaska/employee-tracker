@@ -24,44 +24,6 @@ db.connect(err => {
     startMenu();
 });
 
-// const pool = require('mysql2/promise').createPool({user: 'root', password: 'mysqldb!', database: 'employeetracker'});
-// pool.getConnection()
-//     .then(conn => {
-//         const res = conn.query('select * from department');
-//         conn.release();
-//         return res;
-//     })
-//     .then(result => {
-//         console.table(console.log(result));
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
-
-// db.connect(function(err) {
-//     if (err) throw err;
-//     db.query("select * from department", function (err, result, fields) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
-// });
-
-// db.connect(function(err) {
-//     if (err) throw err;
-//     db.query("select * from role", function (err, result, fields) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
-// });
-
-// db.connect(function(err) {
-//     if (err) throw err;
-//     db.query("select * from employee", function (err, result, fields) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
-// });
-
 
 // create a function inquirer with all menu and `response.menu` below is tied to `name: "menu"`
 function startMenu() {
@@ -95,10 +57,28 @@ function startMenu() {
                 addARole()
             } else if (response.menu === "add an employee") {
                 addAnEmployee()
+            } else if (response.menu === "update an employee role") {
+                updateAnEmployeeRole()
             }
-        });
+        });    
 };
 
+console.table("|__________________________________________________________________________|");
+console.table("|                                                                          |");
+console.table("|  *******  *       *  ******  *        ******  *      *  *******  ******* |");
+console.table("|  *        * *   * *  *    *  *        *    *    *   *   *        *       |");
+console.table("|  *****    *   *   *  ******  *        *    *      *     *****    *****   |");
+console.table("|  *        *       *  *       *        *    *      *     *        *       |");
+console.table("|  *******  *       *  *       *******  ******      *     *******  ******* |");
+console.table("|                                                                          |");
+console.table("|                                                                          |");
+console.table("|  *******  *******         *         *******  *     *   *******   ******  |");
+console.table("|     *     *     *       *   *       *        *   *     *         *    *  |");
+console.table("|     *     *******      *  *  *      *        * *       *****     ******  |");
+console.table("|     *     *  *        *       *     *        *   *     *         *  *    |");
+console.table("|     *     *     *    *         *    *******  *     *   *******   *    *  |");
+console.table("|                                                                          |");
+console.table("|__________________________________________________________________________|");
 
 function viewAllDepartment() {
     db.query("select * from department", function (err, result) {
@@ -109,7 +89,7 @@ function viewAllDepartment() {
 };
 
 function viewAllRoles() {
-    db.query("select * from role", function (err, result) {
+    db.query("select * from role join department on role.department_id = role.id", function (err, result) {
         if (err) throw err;
         console.table(result);
         startMenu();
@@ -147,7 +127,7 @@ function addARole() {
             {
                 type: "input",
                 name: "title",
-                message: "Enter a Role: "
+                message: "Enter Role: "
             },
             {
                 type: "input",
@@ -157,7 +137,7 @@ function addARole() {
             {
                 type: "input",
                 name: "department_id",
-                message: "Enter department id: "
+                message: "Enter Department ID: "
             }
         ])
         .then(response => {
@@ -173,11 +153,47 @@ function addAnEmployee() {
         .prompt([
             {
                 type: "input",
-                name: "employee",
-                message: "Enter employee name: "
+                name: "first_name",
+                message: "Enter First Name: "
+            },
+            {
+                type: 'input',
+                name: "last_name",
+                message: "Enter Last Name: "
+            },
+            {
+                type: "input",
+                name: "role_id",
+                message: "What is the Role ID of this Employee: "
             }
         ])
         .then(response => {
-            db.query("insert into employee ()")
-        })
-}
+            db.query("insert into employee (first_name, last_name, role_id) values (?, ?, ?)", [response.first_name, response.last_name, response.role_id], function(err, result) {
+                if (err) throw err;
+                viewAllEmployee();
+            });
+        });
+};
+
+
+function updateAnEmployeeRole() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "id",
+                message: "What is the ID of Employee need to be updated: ?"
+            },
+            {
+                type: "input",
+                name: "manager_id",
+                message: "What is the manager ID for this employee? :"
+            }
+        ])
+        .then(response => {
+            db.query(`update employee set manager_id = ? where id = ?`, [response.id, response.manager_id], function(err, result) {
+                if (err) throw err;
+                viewAllEmployee();
+            });
+        });
+};
