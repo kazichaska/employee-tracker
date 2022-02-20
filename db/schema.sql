@@ -1,3 +1,5 @@
+-- schema for the employee database tables
+
 DROP table if exists department;
 DROP table if exists role;
 DROP table if exists employee;
@@ -12,7 +14,7 @@ create table role (
     title varchar(30) null,
     salary decimal(10,2) null,
     department_id integer null,
-    constraint fk_dept_id foreign key (department_id) references department(id)
+    constraint fk_dept_id foreign key (department_id) references department(id);
 );
 
 create table employee (
